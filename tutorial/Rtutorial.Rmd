@@ -1,0 +1,146 @@
+---
+title: "R Tutorial"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load libraries and data
+
+We use Connecticut as an example because it is a small dataset and easy to load in but still has fairly complete data. 
+
+```{r, message=FALSE,  warning=FALSE}
+library(tidyverse)
+library(lubridate)
+
+d = read_csv('CT-clean.csv', col_types = list(stop_time = 'c', officer_id = 'c'))
+```
+
+## Data exploration
+
+Now let's apply the same filters we used in the analysis.  We analyze stops of white, black, and Hispanic drivers between 2011 - 2015. 
+
+```{r}
+d = filter(d, 
+           driver_race %in% c('White', 'Black', 'Hispanic'), 
+           year(stop_date) >= 2011, 
+           year(stop_date) <= 2015)
+```
+
+After filtering we lose about 8,000 rows. Now let's compute some basic statistics broken down by the race of the driver.
+
+```{r}
+summary_stats <- function(search_conducted, contraband_found) {
+  n_stops     = length(search_conducted)
+  n_searches  = sum(search_conducted)
+  n_hits      = sum(contraband_found)
+  search_rate = n_searches / n_stops
+  hit_rate    = n_hits / n_searches
+  return(data.frame(n_stops, n_searches, n_hits, search_rate, hit_rate))
+}
+
+basic_summary_statistics_by_race = d %>% 
+  group_by(driver_race) %>% 
+  do(summary_stats(.$search_conducted, .$contraband_found))
+basic_summary_statistics_by_race
+```
+
+The first thing we notice is that black and Hispanic drivers are much more likely to be searched: 
+the search rate is about 2 - 3x higher than for white drivers. This is a pattern that appears across states. 
+This disparity, on its own, does not prove that the police are being discriminatory -- perhaps white drivers are 
+less likely to carry contraband -- but is still worth noting.
+
+Another thing we note is that the hit rate is higher for white drivers than for black and Hispanic drivers. 
+This is the classic "outcome test": if searches of minority drivers are less likely to be successful, that may indicate
+that minority drivers are searched when less likely to be carrying contraband, suggesting discriminatory search standards.
+In general, the combination of higher search rates for minority drivers combined with lower hit rates suggests that
+minority drivers are being searched on less evidence. 
+
+Incidentally, race isn't the only thing you could stratify by. We can easily break down the data by gender or by other categories too. 
+far fewer female drivers are stopped, and they're less likely to be searched, but have comparable hit rates. 
+
+```{r}
+basic_summary_statistics_by_gender = d %>% 
+  group_by(driver_gender) %>% 
+  do(summary_stats(.$search_conducted, .$contraband_found))
+basic_summary_statistics_by_gender
+```
+
+We can also break things down by both race and location.
+This is important to do because search rates or hit rates might vary by location for legitimate reasons
+and racial composition could as well. So we want to see whether search and hit rates differ by race even when
+we control for location. 
+
+```{r}
+basic_summary_statistics_by_race_and_county = d %>% 
+  filter(!is.na(county_name)) %>%
+  group_by(driver_race, county_name) %>%
+  do(summary_stats(.$search_conducted, .$contraband_found))
+```
+
+Let's make a scatterplot which compares search rates and hit rates for minority and white drivers within the same county. 
+```{r, warning=FALSE}
+data_for_plot <- basic_summary_statistics_by_race_and_county %>%
+  filter(driver_race == 'White') %>% 
+  right_join(basic_summary_statistics_by_race_and_county %>% filter(driver_race != 'White'), by='county_name')
+
+# plot search rates. 
+max_val = max(basic_summary_statistics_by_race_and_county$search_rate) * 1.05
+search_plot = ggplot(data_for_plot) + 
+  geom_point(aes(x = search_rate.x, y = search_rate.y, size = n_stops.y)) + # specify data we want to plot
+  facet_grid(.~driver_race.y) +   # make one subplot for each minority race group
+  geom_abline(slope = 1, intercept = 0, linetype='dashed') +   # add a diagonal line to indicate parity
+  scale_x_continuous('White search rate', limits=c(0, max_val), labels = scales::percent, expand=c(0,0)) + 
+  scale_y_continuous('Minority search rate', limits=c(0, max_val), labels = scales::percent, expand=c(0,0)) + 
+  theme_bw(base_size=15) + 
+  theme(legend.position="none") + 
+  scale_size_area(max_size=5)
+search_plot
+```
+
+Points are all above the diagonal line, indicating that search rates are higher for minorities within same county.
+
+```{r,  warning=FALSE}
+max_val = max(basic_summary_statistics_by_race_and_county$hit_rate) * 1.05
+hit_plot = ggplot(data_for_plot) + 
+  geom_point(aes(x = hit_rate.x, y = hit_rate.y, size = n_stops.y)) + 
+  facet_grid(.~driver_race.y) + 
+  geom_abline(slope = 1, intercept = 0) + 
+  scale_x_continuous('White hit rate', limits=c(0, max_val), labels = scales::percent, expand=c(0,0)) + 
+  scale_y_continuous('Minority hit rate', limits=c(0, max_val), labels = scales::percent, expand=c(0,0)) + 
+  theme_bw(base_size=15) + 
+  theme(legend.position="none") + 
+  scale_size_area(max_size=5)
+hit_plot
+```
+
+Points are generally below the diagonal line, indicating that hit rates are lower for minorities within same county.
+
+The outcome test isn't perfect because of what's known as the problem of "infra-marginality". 
+We could observe different hit rates for different race groups even if there's no discrimination. 
+Imagine there are two types of white drivers: those who have a 1% chance of carrying 
+contraband, and those who have a 75% chance. Assume that black drivers have either a 1% or 50% chance of carrying contraband. 
+Even if the police apply the same threshold, hit rates will be different!
+You can read more about this problem, and solutions to it, in "The Problem of Infra-marginality in Outcome Tests for Discrimination". 
+
+Another thing you can do is perform regressions. So maybe we want to look at search rates controlling for race, location, and age. 
+```{r}
+summary_stats_for_regression = d %>% 
+  mutate(driver_age_category = cut(driver_age, 
+                                   c(15, 19, 29, 39, 49, 100), 
+                                   labels = c('16-19', '20-29', '30-39', '40-49', '50+')),
+         driver_race = factor(driver_race, levels = c('White', 'Black', 'Hispanic'))) %>%
+  group_by(driver_race, driver_age_category, driver_gender, county_name) %>% 
+  do(summary_stats(.$search_conducted, .$contraband_found))
+model = glm(cbind(n_searches, n_stops - n_searches) ~ driver_race + driver_age_category + driver_gender + county_name, data = summary_stats_for_regression, family = binomial)
+summary(model)
+```
+
+So that's how to perform basic analyses for a single state. Of course, there's a lot of other things you could do!
+There are many columns we haven't even looked at.
+
+What if you want to scale up and analyze multiple states? You'll find that a lot of states take a lot longer to load in than 
+Connecticut, and loading in all states will require a long time. We suggest working with aggregate data if you want to analyze all states.
+
