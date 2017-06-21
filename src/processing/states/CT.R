@@ -39,7 +39,7 @@ d$stop_date             <- make_date(substr(d$`Intervention Date`, 1, 10), forma
 d$stop_time             <- strftime(strptime(d$`Intervention Time`, "%H:%M"), format = '%H:%M')
 d$stop_time[as.character(d$stop_time) == '00:00'] = NA  # We have an overdensity of stops at midnight; this probably indicates unreliable data, setting these to NA. 
 d$id                    <- make_row_id(d)
-d$location_raw            <- tolower(d$`Intervention Location Name`)
+d$location_raw          <- tolower(d$`Intervention Location Name`)
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips
@@ -61,12 +61,12 @@ d$contraband_found      <- d$`Contraband Indicator`
 d$contraband_found[!d$search_conducted] <- FALSE  # Keep search_conducted + contraband_found consistent: if no search is conducted, contraband cannot be found as result of search. 
 d$stop_outcome          <- multimap(d$id, d$`Intervention Disposition Code`, outcome_keys, outcome_vals, sep = ',')
 # If a stop has multiple outcomes, report most severe outcome, consistent with other states. 
-d$stop_outcome = ifelse(grepl('Arrest', d$stop_outcome) | d$`Custodial Arrest Indicator`, 'Arrest', 
-                 ifelse(grepl('Summons', d$stop_outcome), 'Summons', 
-                 ifelse(grepl('Ticket', d$stop_outcome), 'Ticket', 
-                 ifelse(grepl('Written Warning', d$stop_outcome), 'Written Warning', 
-                 ifelse(grepl('Verbal Warning', d$stop_outcome), 'Verbal Warning', NA)))))
-d$is_arrested = d$stop_outcome == 'Arrest'
+d$stop_outcome          <- ifelse(grepl('Arrest', d$stop_outcome) | d$`Custodial Arrest Indicator`, 'Arrest', 
+                           ifelse(grepl('Summons', d$stop_outcome), 'Summons', 
+                           ifelse(grepl('Ticket', d$stop_outcome), 'Ticket', 
+                           ifelse(grepl('Written Warning', d$stop_outcome), 'Written Warning', 
+                           ifelse(grepl('Verbal Warning', d$stop_outcome), 'Verbal Warning', NA)))))
+d$is_arrested           <- d$stop_outcome == 'Arrest'
 
 # Extra fields
 d$officer_id            <- d$`Reporting Officer Identification ID`

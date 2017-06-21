@@ -54,7 +54,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$DateOfStop)
 d$stop_time             <- strftime(strptime(d$TimeOfStop, "%H:%M"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$County
+d$location_raw          <- d$County
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips
@@ -75,25 +75,27 @@ d$search_conducted      <- d$SearchPerformed == 'Y' # there are multiple search 
 d$search_type_raw       <- ifelse((d$ConsentSearchAccepted == 'Y') & (d$search_conducted == TRUE), 'Consent', NA) # VehicleSearchAuthority might correspond to this but we cannot map it. 
 d$search_type           <- ifelse((d$ConsentSearchAccepted == 'Y') & (d$search_conducted == TRUE), 'Consent', NA)  
 d$contraband_found      <- !is.na(d$DrugSeizureType) |
-  (d$DriverItemsSeized != 'N' & !is.na(d$DriverItemsSeized)) |
-  (d$VehicleItemsSeized != 'N' & !is.na(d$VehicleItemsSeized))
+                             (d$DriverItemsSeized != 'N' & !is.na(d$DriverItemsSeized)) |
+                             (d$VehicleItemsSeized != 'N' & !is.na(d$VehicleItemsSeized))
 d$stop_outcome          <- multimap(d$id, d$OutcomeOfStop, outcome_keys, outcome_vals) # this maps to multiple stop outcomes. We take the most severe, consistent with processing for other states. We do not count voided citations as citations. 
-d$stop_outcome = ifelse(grepl('Arrest', d$stop_outcome), 'Arrest', 
-                 ifelse(grepl('Citation', d$stop_outcome), 'Citation', 
-                 ifelse(grepl('Warning', d$stop_outcome), 'Warning', 
-                 ifelse(grepl('Repair Order', d$stop_outcome), 'Repair Order', 
-                 ifelse(grepl('Field Interview', d$stop_outcome), 'Field Interview', 
-                 ifelse(grepl('Information Only', d$stop_outcome), 'Information Only', NA))))))
+d$stop_outcome          <- ifelse(grepl('Arrest', d$stop_outcome), 'Arrest', 
+                           ifelse(grepl('Citation', d$stop_outcome), 'Citation', 
+                           ifelse(grepl('Warning', d$stop_outcome), 'Warning', 
+                           ifelse(grepl('Repair Order', d$stop_outcome), 'Repair Order', 
+                           ifelse(grepl('Field Interview', d$stop_outcome), 'Field Interview', 
+                           ifelse(grepl('Information Only', d$stop_outcome), 'Information Only', NA))))))
 d$is_arrested           <- grepl('Arrest', d$stop_outcome)
 
 # Extra fields
 d$officer_id            <- d$BadgeNumber
 d$stop_duration_mins    <- as.numeric(strptime(d$EndOfStop, "%H:%M") - strptime(d$TimeOfStop, "%H:%M")) / 60
 d$stop_duration         <- ifelse(!is.na(d$StopDuration), map(d$StopDuration, stop_duration_keys, stop_duration_vals),
-                                  ifelse(is.na(d$stop_duration_mins) | (d$stop_duration_mins < 0), NA, 
-                                         ifelse(d$stop_duration_mins < 11, '0-10',  ifelse(d$stop_duration_mins < 21, '11-20',
-                                                                                           ifelse(d$stop_duration_mins < 31, '21-30', ifelse(d$stop_duration_mins < 46, '31-45',
-                                                                                                                                             ifelse(d$stop_duration_mins < 61, '46-60', '60+')))))))
+                           ifelse(is.na(d$stop_duration_mins) | (d$stop_duration_mins < 0), NA, 
+                           ifelse(d$stop_duration_mins < 11, '0-10',
+                           ifelse(d$stop_duration_mins < 21, '11-20',
+                           ifelse(d$stop_duration_mins < 31, '21-30',
+                           ifelse(d$stop_duration_mins < 46, '31-45',
+                           ifelse(d$stop_duration_mins < 61, '46-60', '60+')))))))
 d$road_number           <- d$Highway
 d$milepost              <- d$Milepost
 d$consent_search        <- (d$ConsentSearchAccepted == 'Y') & (d$search_conducted)

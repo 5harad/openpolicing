@@ -63,7 +63,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(if_else(!is.na(d$`Date of Stop`), as.Date(round(as.numeric(d$`Date of Stop`)), origin='1900-01-01'), as.Date(paste0(d$year, '-01-01'))))
 d$stop_time             <- strftime(strptime(d$`Time of Stop`, "%H:%M"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$Agency
+d$location_raw          <- d$Agency
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

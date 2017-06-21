@@ -55,7 +55,7 @@ d$stop_time             <- NA  # not included
 d$id                    <- make_row_id(d)
 # All of state patrol is mapped to the same city
 # 'city' here refers to the city of the police department's office, generally resides within a county
-d$location_raw            <- ifelse(d$dept == 'Missouri State Highway Patrol', NA, as.character(d$city))
+d$location_raw          <- ifelse(d$dept == 'Missouri State Highway Patrol', NA, as.character(d$city))
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

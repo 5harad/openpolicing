@@ -40,7 +40,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$date)
 d$stop_time             <- strftime(strptime(d$time, "%H:%M:%S"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$county_name
+d$location_raw          <- d$county_name
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

@@ -30,7 +30,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(substr(d$StopTime, 1, 10))
 d$stop_time             <- strftime(strptime(substr(d$StopTime, 12, 16), "%H:%M"), format='%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$County
+d$location_raw          <- d$County
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips
@@ -50,14 +50,12 @@ d$search_conducted      <- !is.na(d$SearchType) & (!(d$SearchType %in% c('NULL',
 d$search_type_raw       <- ifelse(d$search_conducted, d$SearchType, NA)
 d$search_type           <- map(d$search_type_raw, search_type_keys, search_type_vals)
 d$contraband_found      <- NA  # not included
-d$stop_outcome_raw          <- apply(cbind(d$EnforcementAction1, d$EnforcementAction2, d$EnforcementAction3), 1, function(x) paste(sort(unique(x)), collapse=","))
+d$stop_outcome_raw      <- apply(cbind(d$EnforcementAction1, d$EnforcementAction2, d$EnforcementAction3), 1, function(x) paste(sort(unique(x)), collapse=","))
 d$stop_outcome          <- ifelse(grepl('ARREST', d$stop_outcome_raw), 'Arrest', 
-                         ifelse(grepl('CITATION', d$stop_outcome_raw), 'Citation', 
-                         ifelse(grepl('WARNING', d$stop_outcome_raw), 'Warning', 
-                         ifelse(grepl('FAULTY EQUIPMENT', d$stop_outcome_raw), 'Faulty Equipment Notice',
-                         ifelse(grepl('NO ENFORCEMENT|NONE', d$stop_outcome_raw), 'No Action', NA)))))
-                                
-                          
+                           ifelse(grepl('CITATION', d$stop_outcome_raw), 'Citation', 
+                           ifelse(grepl('WARNING', d$stop_outcome_raw), 'Warning', 
+                           ifelse(grepl('FAULTY EQUIPMENT', d$stop_outcome_raw), 'Faulty Equipment Notice',
+                           ifelse(grepl('NO ENFORCEMENT|NONE', d$stop_outcome_raw), 'No Action', NA)))))    
 d$is_arrested           <- grepl('ARREST', d$stop_outcome_raw)
 
 # Extra fields

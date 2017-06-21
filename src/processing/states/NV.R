@@ -29,7 +29,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$Date, min_ds=as.Date("2012-02-01"))
 d$stop_time             <- NA  # not included
 d$id                    <- make_row_id(d)
-d$location_raw            <- NA  # not included
+d$location_raw          <- NA  # not included
 d$county_name           <- NA  # not included
 d$county_fips           <- NA  # not included
 d$fine_grained_location <- NA  # not included

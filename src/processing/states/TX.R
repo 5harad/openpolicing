@@ -142,7 +142,7 @@ d$is_arrested           <- NA  # not included
 
 # Extra columns
 d$officer_id            <- d$HA_OFFICER_ID
-d$driver_first_name      <- str_to_title(d$HA_N_FIRST_DRVR) # need this to filter duplicates, but don't write it to output. 
+d$driver_first_name     <- str_to_title(d$HA_N_FIRST_DRVR) # need this to filter duplicates, but don't write it to output. 
 d$driver_last_name      <- str_to_title(d$HA_N_LAST_DRVR)
 d$lat                   <- as.numeric(d$HA_LATITUDE) / (1e6)
 d$lon                   <- as.numeric(d$HA_LONGITUDE) / (1e6)

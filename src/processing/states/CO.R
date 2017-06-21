@@ -71,7 +71,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$IncidentDate)
 d$stop_time             <- strftime(strptime(substr(d$IncidentTime, 1, 5), "%H:%M"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- as.character(d$LocationCounty)
+d$location_raw          <- as.character(d$LocationCounty)
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

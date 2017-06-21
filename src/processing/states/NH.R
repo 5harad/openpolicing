@@ -65,7 +65,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$INFRACTION_DATE, "%m/%d/%Y")
 d$stop_time             <- substr(strptime(d$INFRACTION_TIME, "%I:%M %p" ),12,16)
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$INFRACTION_COUNTY_NAME
+d$location_raw          <- d$INFRACTION_COUNTY_NAME
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

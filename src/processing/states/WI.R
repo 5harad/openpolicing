@@ -84,7 +84,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$summaryDateOccurred, min_ds=as.Date("2010-01-01"))
 d$stop_time             <- strftime(strptime(d$summaryTimeOccurred, "%H:%M"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- map(d$countyDMV, counties_from, counties_to) 
+d$location_raw          <- map(d$countyDMV, counties_from, counties_to) 
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

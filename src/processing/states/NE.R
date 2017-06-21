@@ -35,7 +35,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(substr(d$TimeStart, 1, 8), format='%m/%d/%y')
 d$stop_time             <- NA  # not included
 d$id                    <- make_row_id(d)
-d$location_raw            <- ifelse(d$county %in% c('Inactive', 'NSP and Other', 'Private'), NA, d$county)
+d$location_raw          <- ifelse(d$county %in% c('Inactive', 'NSP and Other', 'Private'), NA, d$county)
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

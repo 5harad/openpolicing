@@ -72,7 +72,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(paste(substr(d$WEEK, 1, 4), substr(d$WEEK, 5, 6), substr(d$WEEK, 7, 8), sep='-')) # week, not date
 d$stop_time             <- NA  # not included
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$`JURISDICTION CODE`
+d$location_raw          <- d$`JURISDICTION CODE`
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

@@ -52,7 +52,7 @@ d$stop_date             <- make_date(d$date)
 d$stop_time             <- strftime(strptime(substr(d$time,1,5), "%H:%M"), format = '%H:%M')
 d$stop_time[as.character(d$stop_time) == '00:00'] <- NA  # overdensity at 00:00, unreliable times 
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$county_mapped
+d$location_raw          <- d$county_mapped
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

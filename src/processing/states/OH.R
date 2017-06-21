@@ -36,7 +36,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$date, "%m/%d/%Y")
 d$stop_time             <- substr(strptime(d$time, "%H:%M:%S"), 12, 16)
 d$id                    <- make_row_id(d)
-d$location_raw            <- as.character(d$COUNTY_CODE)
+d$location_raw          <- as.character(d$COUNTY_CODE)
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

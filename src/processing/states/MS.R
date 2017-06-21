@@ -25,7 +25,7 @@ d$stop_time             <- NA  # not included
 d$id                    <- make_row_id(d)
 # Counties are two-digits, but the location depends on what kind of location
 # code is used (police department, sherrif office, highway patrol).
-d$location_raw            <- ifelse(substr(d$agency, 1, 2) %in% c('00','90'),
+d$location_raw          <- ifelse(substr(d$agency, 1, 2) %in% c('00','90'),
 	                         substr(d$agency, 3, 4), substr(d$agency, 1, 2))
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name

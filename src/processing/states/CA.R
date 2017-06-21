@@ -41,11 +41,11 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$date1, format='%m/%d/%Y')
 d$stop_time             <- NA  # shift time is provided but this is not granular enough to use as stop time
 d$id                    <- make_row_id(d)
-d$location_raw            <- as.character(d$LocationCode)
+d$location_raw          <- as.character(d$LocationCode)
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips
-d$location_raw            <- map(d$location_raw, ca_map$location_code, ca_map$district_name)  # remap to get original location_raw
+d$location_raw          <- map(d$location_raw, ca_map$location_code, ca_map$district_name)  # remap to get original location_raw
 d$fine_grained_location <- NA  # not included
 d$state_patrol          <- TRUE
 d$police_department     <- NA  # not included

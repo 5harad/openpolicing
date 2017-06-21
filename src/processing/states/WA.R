@@ -35,9 +35,9 @@ d <- d %>% filter( highway_type !='P' & highway_type != 'W')
 message("Saving dataframe so we can rerun location mapping script.")
 d$state     <- this_state
 d$stop_date <- make_date(d$contact_date)
-d$stop_time             <- strftime(strptime(d$contact_hour, "%H"), format = '%H:%M')
+d$stop_time <- strftime(strptime(d$contact_hour, "%H"), format = '%H:%M')
 d$id        <- make_row_id(d)
-grouped_d = d %>% group_by(highway_type, road_number, milepost) %>% #we do not need a unique row for every stop, just one for each milepost_id. 
+grouped_d <- d %>% group_by(highway_type, road_number, milepost) %>% #we do not need a unique row for every stop, just one for each milepost_id. 
                   summarise(n_stops = n()) %>% ungroup()
 save(grouped_d, file="../tmp/raw_data_with_ids.RData")
 source(paste0(code_path, '/src/processing/scripts/WA_map_locations.R'))

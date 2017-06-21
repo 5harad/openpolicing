@@ -28,7 +28,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(paste(substr(d$StopDate, 1, 4), substr(d$StopDate, 5, 6), substr(d$StopDate, 7, 8), sep='-'))
 d$stop_time             <- strftime(strptime(d$StopTime, "%H%M"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- paste('Zone', d$Zone)  # trooper zones, unmapped, can't find mapping, best guess: http://www.scannewengland.net/wiki/index.php?title=Rhode_Island_State_Police
+d$location_raw          <- paste('Zone', d$Zone)  # trooper zones, unmapped, can't find mapping, best guess: http://www.scannewengland.net/wiki/index.php?title=Rhode_Island_State_Police
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

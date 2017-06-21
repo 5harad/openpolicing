@@ -25,7 +25,7 @@ ifelse(is.na(d$AM_PM_IND), d$VIOL_TME,  # Assume times with AM/PM flag are in 24
               ifelse(d$VIOL_TME<1200, d$VIOL_TME+1200,d$VIOL_TME),
               d$VIOL_TME))), "%H%M"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$CNTY_NBR
+d$location_raw          <- d$CNTY_NBR
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

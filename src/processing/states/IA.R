@@ -72,7 +72,7 @@ d$state                 <- this_state
 d$stop_date             <- make_date(d$date, format='%m/%d/%Y')
 d$stop_time             <- strftime(strptime(d$time, "%H:%M"), format = '%H:%M')
 d$id                    <- make_row_id(d)
-d$location_raw            <- d$county  # only the citations have county (and only some)
+d$location_raw          <- d$county  # only the citations have county (and only some)
 counties_clean          <- normalize_county(d)
 d$county_name           <- counties_clean$county_name
 d$county_fips           <- counties_clean$fips

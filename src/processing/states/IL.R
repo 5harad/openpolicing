@@ -154,7 +154,7 @@ d$id                    <- make_row_id(d)
 # State patrol districts map : http://www.isp.state.il.us/districts/districtfinder.cfm
 # For state patrol stops (ie, those made by the Illinois State Police), we define county_name_raw as the district
 # For local stops, we define it as the agency name. 
-d$location_raw            <- ifelse(d$AgencyName == 'ILLINOIS STATE POLICE', paste(d$AgencyName, d$BeatLocationOfStop), d$AgencyName) # we mapped police departments to counties
+d$location_raw          <- ifelse(d$AgencyName == 'ILLINOIS STATE POLICE', paste(d$AgencyName, d$BeatLocationOfStop), d$AgencyName) # we mapped police departments to counties
 d$location_raw[d$location_raw == 'ILLINOIS STATE POLICE NA'] = NA
 counties_clean          <- normalize_county(d) 
 d$county_name           <- counties_clean$county_name
