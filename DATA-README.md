@@ -146,7 +146,7 @@ For several fields (e.g., driver_race) we include a "raw" column which records t
 </table>
 
 
-### Best practicee
+### Best practices
 
 We provide some lessons we’ve learned from working with this rich, but complicated data. 
 
