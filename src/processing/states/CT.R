@@ -29,8 +29,8 @@ race_vals_clean <- c("White", "Black", "Asian", "Hispanic", "Other")
 outcome_keys <- c("I","M","N","U","V","W")
 outcome_vals <- c("Ticket","Summons",NA,"Arrest","Verbal Warning","Written Warning") 
 search_type_keys <- c("C","I","N","O")
-search_type_vals <- c("Consent", "Inventory", NA, "Other")
-search_type_vals_clean <- c("Consent", "Inventory", NA, "Other")
+search_type_vals <- c("Consent", "Inventory", NA, "Probable Cause")
+search_type_vals_clean <- c("Consent", "Inventory", NA, "Probable Cause")
 
 # Rename and extract columns
 print(sprintf("[%s] extracting columns", this_state))

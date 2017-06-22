@@ -248,7 +248,6 @@ http://ctrp3.ctdata.org/rawdata/
 **Data notes**:
 - Counties were mapped by running the cities in the `Intervention Location Name` field through Google's geocoder.
 - Rows appear to represent violations, not individual stops, because a small proportion of rows (1%) report the same officer making multiple stops at the same location at the same time. We grouped the data to combine these duplicates. We don't want to be overly aggressive in grouping together stops, so we only group if the other fields are the same. 
-- While there is some search type data, a high fraction of searches are marked as "Other", so we exclude Connecticut from our consent search analysis.
 - While there is some violation data, we exclude Connecticut from the speeding analysis because it has too much missing data in the violation field.
 - The Connecticut state patrol created another website ([link](http://ctrp3.ctdata.org/)), where new data will get uploaded going forward. We haven't processed this yet.
 

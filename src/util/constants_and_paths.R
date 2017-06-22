@@ -34,7 +34,7 @@ STATES_PROCESSED_BUT_NOT_USED_IN_PAPER = c('IA','MI','MS','ND','NH','NV','OR','S
 ALL_PROCESSED_STATES = c(FINAL_STATE_LIST, STATES_PROCESSED_BUT_NOT_USED_IN_PAPER)
 # states with sufficiently high-quality data to include in specific analyses. 
 GOOD_SEARCH_CONDUCTED_DATA = c('AZ', 'CA', 'CO', 'CT', 'FL', 'IL', 'MA', 'MD', 'MO', 'MT', 'NC', 'NE', 'OH', 'RI', 'SC', 'TX', 'VT', 'WA', 'WI')
-GOOD_CONSENT_DATA = c('CO', 'FL', 'MA', 'MD', 'NC', 'TX', 'WA')
+GOOD_CONSENT_DATA = c('CO', 'CT', 'FL', 'MA', 'MD', 'NC', 'TX', 'WA')
 GOOD_ARREST_DATA = c('AZ', 'CA', 'CO', 'CT', 'FL',  'MA', 'MD', 'MT', 'NC', 'OH', 'RI', 'SC', 'VT', 'WI')
 GOOD_SPEEDING_CITATION_DATA =  c('CO', 'FL', 'IL', 'MT', 'NC', 'RI',  'TX', 'WI')
 GOOD_COUNTY_LEVEL_CONTRABAND_DATA = c('CO', 'CT', 'IL', 'NC', 'RI', 'SC', 'TX', 'WA', 'WI' )
