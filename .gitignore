@@ -13,7 +13,7 @@ release/data*
 *.exe
 *.o
 *.so
- 
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
@@ -24,8 +24,10 @@ release/data*
 *.jar
 *.rar
 *.tar
-*.zip
- 
+*.csv
+*.py
+*.ipynb
+.ipynb_checkpoints*
 # Logs and databases #
 ######################
 *.log
@@ -37,7 +39,7 @@ release/data*
 
 *_files
 *_cache
- 
+
 # OS generated files #
 ######################
 .DS_Store
