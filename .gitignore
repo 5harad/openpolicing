@@ -26,6 +26,7 @@ release/data*
 *.tar
 *.csv
 *.py
+*.zip
 *.ipynb
 .ipynb_checkpoints*
 # Logs and databases #
