@@ -283,6 +283,34 @@ http://ctrp3.ctdata.org/rawdata/
 - `out_of_state`
 
 
+### Georgia
+
+**Original format**: csv
+
+**Time period**: ??
+
+**Columns with no data**:
+- `driver_race` ??
+- `search_conducted` ??
+- `search_type` ??
+- `contraband_found`  ??
+- `stop_outcome`
+
+**Data notes**:
+- warnings only
+
+**Extra fields**:
+- `lat`
+- `lon`
+- `officer_id`
+- `officer_rank`
+- `out_of_state`
+- `vehicle_make`
+- `vehicle_model`
+- `vehicle_color`
+- `vehicle_year`
+
+
 ### Iowa
 
 **Original format**: tab-separated (txt)

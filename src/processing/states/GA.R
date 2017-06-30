@@ -1,6 +1,14 @@
+# Processing code for Georgia
+
+# Set-up
+this_state <- 'GA'
+change_path(this_state)
+
+# Read in and combine data
+print(sprintf("[%s] reading in the data", this_state))
 
 
-
+# column names draft
 colnames(d)[1] = 'id'
 colnames(d)[4] = 'date_time'
 colnames(d)[10] = 'county'
@@ -22,4 +30,4 @@ colnames(d)[53] = 'officer_rank'
 colnames(d)[54] = 'officer_last_name'
 colnames(d)[55] = 'officer_first_name??'
 colnames(d)[56] = 'officer_id??'
-colnames(d)[X103] = 'warning,violation'
+colnames(d)[103] = 'warning,violation'
