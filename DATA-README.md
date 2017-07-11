@@ -643,7 +643,8 @@ http://ctrp3.ctdata.org/rawdata/
 - Counties were mapped using the provided dictionary, which is included in the raw data folder.
 - We cannot find disposition codes (in `DISP_STRING`) which clearly indicate whether a citation as opposed to a warning was given, although there is a disposition for warnings.
 - The data contains stops of both type TS and TSA, standing for "traffic stop"" and "traffic stop additional". The latter have a higher search rate and tend to have additional information (i.e., `ASINC_STRING` is not NA). We include both types in analysis, as they do not appear to be duplicates (addresses and times do not match) and we do not have a clear reason to exclude either. 
-- While there is data on search types, they only include consent and K9 searches, suggesting a potential difference in recording policy (many other states have probable cause searches and incident to arrest searches, for example). 
+- While there is data on search types, they only include consent and K9 searches, suggesting a potential difference in recording policy (many other states have probable cause searches and incident to arrest searches, for example).
+- `officer_id` refers to a single officer throughout their tenure on the state patrol, but it is re-assigned to a new trooper upon an officer's retirement.
 
 **Extra fields**:
 - `lat`
