@@ -7,27 +7,73 @@ change_path(this_state)
 # Read in and combine data
 print(sprintf("[%s] reading in the data", this_state))
 
+d <- lapply(list.files('.'), function(fn) {
+    read_csv(fn, col_names=F, col_types=paste(rep('c',103), collapse=''))
+  }) %>%
+  bind_rows()
 
-# column names draft
-colnames(d)[1] = 'id'
-colnames(d)[4] = 'date_time'
-colnames(d)[10] = 'county'
-colnames(d)[13] = 'agency'
-colnames(d)[14] = 'birthdate'
-colnames(d)[17] = 'sex'
-colnames(d)[20] = 'hair_color'
-colnames(d)[21] = 'eye_color'
-colnames(d)[25] = 'license_plate_state'
-colnames(d)[26] = 'vehicle_commercial'
-colnames(d)[29] = 'vehicle_year'
-colnames(d)[30] = 'vehicle_make'
-colnames(d)[31] = 'vehicle_model'
-colnames(d)[33] = 'vehicle_color'
-colnames(d)[42] = 'location'
-colnames(d)[48] = 'lat'
-colnames(d)[49] = 'long'
-colnames(d)[53] = 'officer_rank'
-colnames(d)[54] = 'officer_last_name'
-colnames(d)[55] = 'officer_first_name??'
-colnames(d)[56] = 'officer_id??'
-colnames(d)[103] = 'warning,violation'
+# separate date and time
+d <- d %>%
+  separate(X4, c("date","time"), " ")
+
+# Group same stop rows to account for multiple violations
+d <- d %>%
+  group_by(date,time,X9,X11,X13,X29,X30,X31,X33,X39,X48,X49,X52,X53,X56) %>%
+  summarize(
+    dob  = get_unique_value_if_exists(X14),
+    sex  = get_unique_value_if_exists(X17),
+    race = get_unique_value_if_exists(X15),
+    loc  = paste(na.omit(unique(X42)), collapse=','),
+    violation = str_to_lower(paste0(X103, collapse = ','))
+  ) %>%
+  ungroup()
+
+# Value dictionaries
+race_keys <- c("A","B","H","I","O","W")
+race_vals <- c("Asian","Black","Hispanic","Native American","Other","White")
+race_vals_clean <- c("Asian","Black","Hispanic","Other","Other","White")
+
+# Rename and extract columns
+print(sprintf("[%s] extracting columns", this_state))
+d$state                 <- this_state
+d$stop_date             <- make_date(d$date)
+d$stop_time             <- strftime(strptime(substr(d$time, 1, 5), "%H:%M"), format='%H:%M')
+d$id                    <- make_row_id(d)
+d$location_raw          <- as.character(d$X9)
+counties_clean          <- normalize_county(d)
+d$county_name           <- counties_clean$county_name
+d$county_fips           <- counties_clean$fips
+d$fine_grained_location <- paste(d$X11, d$loc)  # city, location
+d$state_patrol          <- TRUE
+d$police_department     <- d$X13
+d$driver_gender         <- ifelse(d$sex %in% c("M","F"), d$sex, NA)
+d$driver_age_raw        <- substr(d$dob, 1, 10)
+d$driver_age            <- get_age(d, type='birthdate')
+d$driver_race_raw       <- map(d$race, race_keys, race_vals)
+d$driver_race           <- map(d$race, race_keys, race_vals_clean)
+d$driver_race           <- ifelse(d$driver_race %in% c("Asian","Black","Hispanic","Other","White", NA, ''), d$driver_race, "Other")
+d$violation_raw         <- normalize_violation(d, str_to_lower(d$violation), clean=F)
+d$violation             <- normalize_violation(d, str_to_lower(d$violation), clean=T)
+d$search_type_raw       <- NA  # not included
+d$search_type           <- NA  # not included
+d$search_conducted      <- NA  # not included
+d$contraband_found      <- NA  # not included
+d$stop_outcome          <- "Warning"
+d$is_arrested           <- NA  # not included
+
+# Extra fields
+d$lat                   <- d$X48
+d$lon                   <- d$X49
+d$officer_id            <- str_pad(d$X56, 4, pad='0')
+d$officer_troop         <- d$X52
+d$officer_rank          <- d$X53
+d$out_of_state          <- d$X39 == 'GA'
+d$vehicle_make          <- d$X30
+d$vehicle_model         <- d$X31
+d$vehicle_color         <- d$X33
+d$vehicle_year          <- d$X29
+
+# Close-up
+write_cleaned_state(d, extra_cols=c('lat','lon','officer_id','officer_troop','officer_rank',
+    'out_of_state','vehicle_make','vehicle_model','vehicle_color','vehicle_year'))
+change_path(NA)
