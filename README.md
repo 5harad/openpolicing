@@ -8,8 +8,8 @@ This repository contains the code and accessory files needed to process the stat
 
 ## Instructions for working with the data and reproducing results in the paper
 
-1. Download the state data from the Open Policing website and store it in `data_and_models/data/`. Each state should be stored in its own folder using a two-letter state code in the following format: "TWO_LETTER_CODE/TWO_LETTER_CODE-clean.csv.gz". For example, Rhode Island would be stored in "RI/RI-clean.csv.gz".
-2. Download the external datasets necessary for the analysis -- the Census data and the PPCS data -- from the Open Policing website and store them in `data_and_models/external_datasets/`. 
+1. Download the state data from the [Open Policing website](https://openpolicing.stanford.edu/data/) and store it in `data_and_models/data/`. Each state should be stored in its own folder using a two-letter state code in the following format: "TWO_LETTER_CODE/TWO_LETTER_CODE-clean.csv.gz". For example, Rhode Island would be stored in "RI/RI-clean.csv.gz".
+2. Download the external datasets necessary for the analysis -- the [Census data](https://stacks.stanford.edu/file/druid:py883nd2578/census-clean.csv.gz) and the [PPCS](https://stacks.stanford.edu/file/druid:py883nd2578/ppcs.tsv) data -- from the Open Policing website and store them in `data_and_models/external_datasets/`. 
 3. The video tutorial posted on the Open Policing website provides an introduction to performing analyses on the data. 
 4. The script used to reproduce all results in the paper is `src/recreate_results_in_paper.R`. All analyses should be run using this script, not by running other scripts directly, since it sources the necessary dependencies. To run this script:
 
