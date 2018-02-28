@@ -6,6 +6,10 @@ This repository contains the code and accessory files needed to process the stat
   * `/src` contains the code.
   * `/tutorial` contains R tutorials for analyzing the data.
 
+When using this code or data, please cite our [working paper](https://arxiv.org/abs/1706.05678):
+
+E. Pierson, C. Simoiu, J. Overgoor, S. Corbett-Davies, V. Ramachandran, C. Phillips, S. Goel. (2017) “A large-scale analysis of racial disparities in police stops across the United States”.
+
 ## Instructions for working with the data and reproducing results in the paper
 
 1. Download the state data from the [Open Policing website](https://openpolicing.stanford.edu/data/) and store it in `data_and_models/data/`. Each state should be stored in its own folder using a two-letter state code in the following format: "TWO_LETTER_CODE/TWO_LETTER_CODE-clean.csv.gz". For example, Rhode Island would be stored in "RI/RI-clean.csv.gz".
