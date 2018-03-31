@@ -29,9 +29,9 @@ d <- d %>%
   ungroup()
 
 # Value dictionaries
-race_keys <- c("A","B","H","I","O","W")
-race_vals <- c("Asian","Black","Hispanic","Native American","Other","White")
-race_vals_clean <- c("Asian","Black","Hispanic","Other","Other","White")
+race_keys <- c("A","B","H","I","O","W","")
+race_vals <- c("Asian","Black","Hispanic","Native American","Other","White",NA)
+race_vals_clean <- c("Asian","Black","Hispanic","Other","Other","White",NA)
 
 # Rename and extract columns
 print(sprintf("[%s] extracting columns", this_state))
@@ -51,7 +51,7 @@ d$driver_age_raw        <- substr(d$dob, 1, 10)
 d$driver_age            <- get_age(d, type='birthdate')
 d$driver_race_raw       <- map(d$race, race_keys, race_vals)
 d$driver_race           <- map(d$race, race_keys, race_vals_clean)
-d$driver_race           <- ifelse(d$driver_race %in% c("Asian","Black","Hispanic","Other","White", NA, ''), d$driver_race, "Other")
+d$driver_race           <- ifelse(d$driver_race %in% c("Asian","Black","Hispanic","Other","White", NA), d$driver_race, "Other")
 d$violation_raw         <- normalize_violation(d, str_to_lower(d$violation), clean=F)
 d$violation             <- normalize_violation(d, str_to_lower(d$violation), clean=T)
 d$search_type_raw       <- NA  # not included
