@@ -599,6 +599,31 @@ http://ctrp3.ctdata.org/rawdata/
 - `vehicle_model`
 - `vehicle_color`
 
+### New York
+
+**Original format**: `.accdb`
+
+**Time period**: 2010 - 2017-11
+
+**Columns with no data**:
+- `police_department`
+- `search_conducted`
+- `search_type_raw`
+- `search_type`
+- `contraband_found`
+- `stop_outcome`
+- `stop_outcome`
+- `is_arrested`
+
+**Data notes**:
+* The data include only citations.
+* There is no data on searches.
+* The data stops at 2017-12-13.
+
+**Extra fields**:
+- `out_of_state`
+- `vehicle_type`
+
 
 ### Nevada
 
@@ -622,7 +647,7 @@ http://ctrp3.ctdata.org/rawdata/
 - The violation field is populated by infraction codes.
 
 **Extra fields**:
-- ``drugs_related_stop``
+- `drugs_related_stop`
 
 
 ### Ohio
@@ -693,7 +718,7 @@ http://ctrp3.ctdata.org/rawdata/
 - `fine_grained_location`
 
 **Data notes**:
-- The stops are mapped to state patrol zones, but there does not seem to be a clear mapping to counties. We store state patrol zones in the `district` column and use this column in our granular location analyses. 
+- The stops are mapped to state patrol zones, which represent police barrack juridisdiction areas. However, there is no simple mapping between zones and counties. We store state patrol zones in the `district` column and use this column in our granular location analyses. 
 
 **Extra fields**:
 - `stop_duration`
