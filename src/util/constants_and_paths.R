@@ -27,7 +27,7 @@ stopifnot(file.exists(data_and_models_path),
 THRESHOLD_TEST_MODEL_NAME = 'flat'
 # states included in analysis
 FINAL_STATE_LIST = c('AZ','CA','CO','CT','FL','IL','MA','MD','MO','MT',
-                     'NC','NE','NJ','OH','RI','SC','TX','VT','WA','WI')
+                     'NC','NE','NJ','NY','OH','RI','SC','TX','VT','WA','WI')
 # states which are processed but have inadequate data for paper
 STATES_PROCESSED_BUT_NOT_USED_IN_PAPER = c('IA','MI','MS','ND','NH','NV','OR','SD','TN','VA','WY')
 # all states
