@@ -312,7 +312,7 @@ http://ctrp3.ctdata.org/rawdata/
 
 **Original format**: ~-separated (txt)
 
-**Time period**: 2004 to 2015
+**Time period**: 2004 to 2016
 
 **Columns with no data**:
 - `is_arrested`
