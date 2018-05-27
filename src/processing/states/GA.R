@@ -67,7 +67,7 @@ d$lon                   <- d$X49
 d$officer_id            <- str_pad(d$X56, 4, pad='0')
 d$officer_troop         <- d$X52
 d$officer_rank          <- d$X53
-d$out_of_state          <- d$X39 == 'GA'
+d$out_of_state          <- d$X39 != 'GA'
 d$vehicle_make          <- d$X30
 d$vehicle_model         <- d$X31
 d$vehicle_color         <- d$X33
