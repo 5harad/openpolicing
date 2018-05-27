@@ -550,9 +550,9 @@ http://ctrp3.ctdata.org/rawdata/
 
 ### Nebraska
 
-**Original format**: MDB
+**Original format**: MDB, excel (xlsx)
 
-**Time period**: 2002-2014
+**Time period**: 2002-2016
 
 **Columns with no data**:
 - `stop_time`
@@ -571,7 +571,7 @@ http://ctrp3.ctdata.org/rawdata/
 - The original data was aggregated. It was grouped by stop reason, outcome and whether there was a search separately. Therefore, it is not possible to cross tabulate them together. We only use the last grouping.
 - State and local stops are mixed together, but identifiable by the `dept_lvl` field.
 - The data is by quarter, not by day. So all stop_dates are the first date of the quarter.
-- For state patrol stops, there is a strange jump (Q1) and then dip (Q2–4) in the data for 2012. It looks like for 2012 all stops are recorded as happening in the first quarter.
+- For state patrol stops, there is a strange jump (Q1) and then dip (Q2–4) in the data for 2012. It looks like for 2012 most stops are recorded as happening in the first quarter.
 
 **Extra fields**: none
 
