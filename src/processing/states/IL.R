@@ -53,7 +53,7 @@ for (fn in list.files(path='.')) {
   # add missing columns
   if(year %in% 2004:2006 | chicago07) { new_d <- new_d %>% add_new_col("DurationOfStop", 5) }
   if(year %in% 2004:2009) { new_d <- new_d %>% add_new_col("ZIPCode", 6) }
-  if(year %in% 2007:2015) { new_d <- new_d %>% add_new_col("TypeOfRoadway", 15) }
+  if(year %in% 2007:2016) { new_d <- new_d %>% add_new_col("TypeOfRoadway", 15) }
   # merge column names
 
   colnames(new_d)[1:16] <- first_cols
@@ -97,7 +97,7 @@ for (fn in list.files(path='.')) {
                                     coalesce(VehicleSearchType, DriverSearchType, PassengersSearchType))
     )
   }
-  if(year %in% 2012:2015) { 
+  if(year %in% 2012:2016) { 
     new_d <- new_d %>% mutate(
       contraband_found = VehicleContrabandFound == 1 | VehicleDrugsFound == 1 | VehicleDrugParaphernaliaFound == 1 |
         VehicleAlcoholFound == 1 | VehicleWeaponFound == 1 | VehicleStolenPropertyFound == 1 |
