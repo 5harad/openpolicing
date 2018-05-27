@@ -29,7 +29,7 @@ THRESHOLD_TEST_MODEL_NAME = 'flat'
 FINAL_STATE_LIST = c('AZ','CA','CO','CT','FL','IL','MA','MD','MO','MT',
                      'NC','NE','NJ','OH','RI','SC','TX','VT','WA','WI')
 # states which are processed but have inadequate data for paper
-STATES_PROCESSED_BUT_NOT_USED_IN_PAPER = c('IA','MI','MS','ND','NH','NV','OR','SD','TN','VA','WY')
+STATES_PROCESSED_BUT_NOT_USED_IN_PAPER = c('GA','IA','MI','MS','ND','NH','NV','OR','SD','TN','VA','WY')
 # all states
 ALL_PROCESSED_STATES = c(FINAL_STATE_LIST, STATES_PROCESSED_BUT_NOT_USED_IN_PAPER)
 # states with sufficiently high-quality data to include in specific analyses. 

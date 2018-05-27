@@ -283,6 +283,37 @@ http://ctrp3.ctdata.org/rawdata/
 - `out_of_state`
 
 
+### Georgia
+
+**Original format**: csv
+
+**Time period**: 2012-2016
+
+**Columns with no data**:
+- `search_conducted`
+- `search_type`
+- `contraband_found`
+- `stop_outcome`
+
+**Data notes**:
+- The data represent warnings.
+- The provided `.txt` was comma-separated, but not quoted. Therefor we had to write a script (`convert_GA.py`) to iron out some obviously misaligned columns.
+- Rows represent individual warnings, and thus need to be aggregated to represent a single stop.
+- The race field on the warnings form is optional.
+
+**Extra fields**:
+- `lat`
+- `lon`
+- `officer_id`
+- `officer_troop`
+- `officer_rank`
+- `out_of_state`
+- `vehicle_make`
+- `vehicle_model`
+- `vehicle_color`
+- `vehicle_year`
+
+
 ### Iowa
 
 **Original format**: tab-separated (txt)
